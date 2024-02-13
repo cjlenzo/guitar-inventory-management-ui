@@ -5,41 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body style = "background-color:tan">
 
-    <label>Id:</label>
-    <input id="duckId"/>
-    <label>Type:</label>
-    <input id="duckType" />
-    <label>Image:</label>
-    <input type="file" id="duckImage">
-    <button onclick="addTheDuck()">Add the duck</button>
+    <label>Serial Number: </label>
+    <input id = "serial_number"/>
+    <br/>
+    <label>Price: </label>
+    <input id = "price"/>
+    <br/>
+    <label>Builder: </label>
+    <input id = "builder"/>
+    <br/>
+    <label>Model: </label>
+    <input id = "model"/>
+    <br/>
+    <label>Type: </label>
+    <input id = "type"/>
+    <br/>
+    <label>Back Wood: </label>
+    <input id = "back_wood"/>
+    <br/>
+    <label>Top Wood: </label>
+    <input id = "top_wood"/>
+    <br/>
+    <button onclick="addGuitar()">Add the Guitar</button>
     
     <script>
-        function addTheDuck() {
-            let duckIdNode = document.getElementById("duckId");
-            let duckId = duckIdNode.value;
-            let duckTypeNode = document.getElementById("duckType");
-            let duckType = duckTypeNode.value;
-            let duck = {id: duckId, type: duckType}
-            alert("You entered: " + JSON.stringify(duck));
-
-            let duckImageNode = document.getElementById("duckImage");
-            alert("The image:" + duckImageNode.files[0].name + ", size = " + duckImageNode.files[0].size);
+        function addGuitar() {
+            let serial_number_node = document.getElementById("serial_number");
+            let sn = serial_number_node.value;
+            let price_node = document.getElementById("price");
+            let p = price_node.value;
+            let builder_node = document.getElementById("builder");
+            let b = builder_node.value;
+            let model_node = document.getElementById("model");
+            let m = model_node.value;
+            let type_node = document.getElementById("type");
+            let t = type_node.value;
+            let back_wood_node = document.getElementById("back_wood");
+            let bw = back_wood_node.value;
+            let top_wood_node = document.getElementById("top_wood");
+            let tw = top_wood_node.value;
+            let guitar = {serial_number: sn, price: p, builder: b, model: m, type: t, back_wood: bw, top_wood: tw};
+            alert("\n You entered: " + JSON.stringify(guitar));
         }
     </script>
 
 </body>
 </html>
-
-function addTheDuck() {
-    let duckIdNode = document.getElementById("duckId");
-    let duckId = duckIdNode.value;
-    let duckTypeNode = document.getElementById("duckType");
-    let duckType = duckTypeNode.value;
-    let duck = {id: duckId, type: duckType}
-    alert("You entered: " + JSON.stringify(duck));
-
-    let duckImageNode = document.getElementById("duckImage");
-    alert("The image:" + duckImageNode.files[0].name + ", size = " + duckImageNode.files[0].size);
-}

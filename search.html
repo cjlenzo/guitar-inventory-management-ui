@@ -5,17 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <labe>Type:</labe>
-    <input id="type" />
+<body style = "background-color:tan">
+    <label>Serial Number: </label>
+    <input id = "serial_number"/>
+    <br/>
+    <label>Price: </label>
+    <input id = "price"/>
+    <br/>
+    <label>Builder: </label>
+    <input id = "builder"/>
+    <br/>
+    <label>Model: </label>
+    <input id = "model"/>
+    <br/>
+    <label>Type: </label>
+    <input id = "type"/>
+    <br/>
+    <label>Back Wood: </label>
+    <input id = "back_wood"/>
+    <br/>
+    <label>Top Wood: </label>
+    <input id = "top_wood"/>
+    <br/>
     <button onclick="search()">Search</button>
-    <br />
+    <br/>
 
     <table>
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Serial Number</th>
+                <th>Price</th>
+                <th>Builder</th>
+                <th>Model</th>
                 <th>Type</th>
+                <th>Back Wood</th>
+                <th>Top Wood</th>
             </tr>
         </thead>
         <tbody id="searchResult">
@@ -24,30 +48,68 @@
     </table>
 
     <script>
-        let ducks = [
-            { id: 1, type: "Mallard" },
-            { id: 2, type: "Redhead" },
-            { id: 3, type: "Decoy" }, 
-            { id: 4, type: "Redhead" },
-            { id: 5, type: "Redhead" },
-            { id: 6, type: "Mallard" },
+        let guitars = [
+            { serial_number: "123456789", price: 100, builder: "Fender", model: "Stratocaster", type: "Electric", back_wood: "Indian Rosewood", top_wood: "Maple" },
+            { serial_number: "111111111", price: 100, builder: "Fender", model: "A", type: "Electric", back_wood: "Maple", top_wood: "Birch" }, 
+            { serial_number: "222222222", price: 300, builder: "Gibson", model: "X", type: "Acoustic", back_wood: "Mahogany", top_wood: "Spruce" }, 
+            { serial_number: "333333333", price: 150, builder: "Fender", model: "Telecaster", type: "Electric", back_wood: "Oak", top_wood: "Redwood" }, 
+            { serial_number: "444444444", price: 200, builder: "Gibson", model: "Les Paul", type: "Electric", back_wood: "Birch", top_wood: "Oak" }, 
+            { serial_number: "555555555", price: 250, builder: "Yamaha", model: "M", type: "Acoustic", back_wood: "Spruce", top_wood: "Maple" },
         ];
         function search() {
-            let duckType = document.getElementById("type").value;
+            let guitarSerialNumber = document.getElementById("serial_number").value;
+            let guitarPrice = document.getElementById("price").value;
+            let guitarBuilder = document.getElementById("builder").value;
+            let guitarModel = document.getElementById("model").value;
+            let guitarType = document.getElementById("type").value;
+            let guitarBackWood = document.getElementById("back_wood").value;
+            let guitarTopWood = document.getElementById("top_wood").value;
             let table = document.getElementById("searchResult");
             table.innerHTML = "";
-            for (let duck of ducks) {
-                if (!duckType || duck.type == duckType) {
-                    let row = document.createElement("tr");
-                    let cell1 = document.createElement("td");
-                    let cell2 = document.createElement("td");
-                    let id = document.createTextNode(duck.id);
-                    let type = document.createTextNode(duck.type);
-                    cell1.appendChild(id);
-                    cell2.appendChild(type);
-                    row.appendChild(cell1);
-                    row.appendChild(cell2);
-                    table.appendChild(row);
+            for (let guitar of guitars) {
+                if (!guitarSerialNumber || guitar.serial_number == guitarSerialNumber) {
+                    if (!guitarPrice || guitar.price == guitarPrice) {
+                        if (!guitarBuilder || guitar.builder == guitarBuilder) {
+                            if (!guitarModel || guitar.model == guitarModel) {
+                                if (!guitarType || guitar.type == guitarType) {
+                                    if (!guitarBackWood || guitar.back_wood == guitarBackWood) {
+                                        if (!guitarTopWood || guitar.top_wood == guitarTopWood) {
+                                            let row = document.createElement("tr");
+                                            let cell1 = document.createElement("td");
+                                            let cell2 = document.createElement("td");
+                                            let cell3 = document.createElement("td");
+                                            let cell4 = document.createElement("td");
+                                            let cell5 = document.createElement("td");
+                                            let cell6 = document.createElement("td");
+                                            let cell7 = document.createElement("td");
+                                            let sn = document.createTextNode(guitar.serial_number);
+                                            let p = document.createTextNode(guitar.price);
+                                            let b = document.createTextNode(guitar.builder);
+                                            let m = document.createTextNode(guitar.model);
+                                            let t = document.createTextNode(guitar.type);
+                                            let bw = document.createTextNode(guitar.back_wood);
+                                            let tw = document.createTextNode(guitar.top_wood);
+                                            cell1.appendChild(sn);
+                                            cell2.appendChild(p);
+                                            cell3.appendChild(b);
+                                            cell4.appendChild(m);
+                                            cell5.appendChild(t);
+                                            cell6.appendChild(bw);
+                                            cell7.appendChild(tw);
+                                            row.appendChild(cell1);
+                                            row.appendChild(cell2);
+                                            row.appendChild(cell3);
+                                            row.appendChild(cell4);
+                                            row.appendChild(cell5);
+                                            row.appendChild(cell6);
+                                            row.appendChild(cell7);
+                                            table.appendChild(row);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

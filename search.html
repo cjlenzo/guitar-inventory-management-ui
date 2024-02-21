@@ -48,70 +48,73 @@
     </table>
 
     <script>
-        let guitars = [
-            { serial_number: "123456789", price: 100, builder: "Fender", model: "Stratocaster", type: "Electric", back_wood: "Indian Rosewood", top_wood: "Maple" },
-            { serial_number: "111111111", price: 100, builder: "Fender", model: "A", type: "Electric", back_wood: "Maple", top_wood: "Birch" }, 
-            { serial_number: "222222222", price: 300, builder: "Gibson", model: "X", type: "Acoustic", back_wood: "Mahogany", top_wood: "Spruce" }, 
-            { serial_number: "333333333", price: 150, builder: "Fender", model: "Telecaster", type: "Electric", back_wood: "Oak", top_wood: "Redwood" }, 
-            { serial_number: "444444444", price: 200, builder: "Gibson", model: "Les Paul", type: "Electric", back_wood: "Birch", top_wood: "Oak" }, 
-            { serial_number: "555555555", price: 250, builder: "Yamaha", model: "M", type: "Acoustic", back_wood: "Spruce", top_wood: "Maple" },
-        ];
-        function search() {
-            let guitarSerialNumber = document.getElementById("serial_number").value;
-            let guitarPrice = document.getElementById("price").value;
-            let guitarBuilder = document.getElementById("builder").value;
-            let guitarModel = document.getElementById("model").value;
-            let guitarType = document.getElementById("type").value;
-            let guitarBackWood = document.getElementById("back_wood").value;
-            let guitarTopWood = document.getElementById("top_wood").value;
+        let guitars = [];
+
+        async function search() {
+            if (guitars.length == 0) {
+                guitars = await getAllMatchingGuitars();
+            }
+            alert(JSON.stringify(guitars));
             let table = document.getElementById("searchResult");
             table.innerHTML = "";
             for (let guitar of guitars) {
-                if (!guitarSerialNumber || guitar.serial_number == guitarSerialNumber) {
-                    if (!guitarPrice || guitar.price == guitarPrice) {
-                        if (!guitarBuilder || guitar.builder == guitarBuilder) {
-                            if (!guitarModel || guitar.model == guitarModel) {
-                                if (!guitarType || guitar.type == guitarType) {
-                                    if (!guitarBackWood || guitar.back_wood == guitarBackWood) {
-                                        if (!guitarTopWood || guitar.top_wood == guitarTopWood) {
-                                            let row = document.createElement("tr");
-                                            let cell1 = document.createElement("td");
-                                            let cell2 = document.createElement("td");
-                                            let cell3 = document.createElement("td");
-                                            let cell4 = document.createElement("td");
-                                            let cell5 = document.createElement("td");
-                                            let cell6 = document.createElement("td");
-                                            let cell7 = document.createElement("td");
-                                            let sn = document.createTextNode(guitar.serial_number);
-                                            let p = document.createTextNode(guitar.price);
-                                            let b = document.createTextNode(guitar.builder);
-                                            let m = document.createTextNode(guitar.model);
-                                            let t = document.createTextNode(guitar.type);
-                                            let bw = document.createTextNode(guitar.back_wood);
-                                            let tw = document.createTextNode(guitar.top_wood);
-                                            cell1.appendChild(sn);
-                                            cell2.appendChild(p);
-                                            cell3.appendChild(b);
-                                            cell4.appendChild(m);
-                                            cell5.appendChild(t);
-                                            cell6.appendChild(bw);
-                                            cell7.appendChild(tw);
-                                            row.appendChild(cell1);
-                                            row.appendChild(cell2);
-                                            row.appendChild(cell3);
-                                            row.appendChild(cell4);
-                                            row.appendChild(cell5);
-                                            row.appendChild(cell6);
-                                            row.appendChild(cell7);
-                                            table.appendChild(row);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                let row = document.createElement("tr");
+                let cell1 = document.createElement("td");
+                let cell2 = document.createElement("td");
+                let cell3 = document.createElement("td");
+                let cell4 = document.createElement("td");
+                let cell5 = document.createElement("td");
+                let cell6 = document.createElement("td");
+                let cell7 = document.createElement("td");
+                let sn = document.createTextNode(guitar.serialNumber);
+                let p = document.createTextNode(guitar.price);
+                let b = document.createTextNode(guitar.builder);
+                let m = document.createTextNode(guitar.model);
+                let t = document.createTextNode(guitar.type);
+                let bw = document.createTextNode(guitar.backWood);
+                let tw = document.createTextNode(guitar.topWood);
+                cell1.appendChild(sn);
+                cell2.appendChild(p);
+                cell3.appendChild(b);
+                cell4.appendChild(m);
+                cell5.appendChild(t);
+                cell6.appendChild(bw);
+                cell7.appendChild(tw);
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                row.appendChild(cell3);
+                row.appendChild(cell4);
+                row.appendChild(cell5);
+                row.appendChild(cell6);
+                row.appendChild(cell7);
+                table.appendChild(row);
             }
+            guitars = []
+            return;
+        }
+
+        async function getAllMatchingGuitars() {
+            let host = "http://localhost:8081";
+            let request = {
+                method: "GET"
+            };
+            let guitarSerialNumber = document.getElementById("serial_number").value ?? '';
+            let guitarPrice = document.getElementById("price").value ?? -1;
+            let guitarBuilder = document.getElementById("builder").value ?? '';
+            let guitarModel = document.getElementById("model").value ?? '';
+            let guitarType = document.getElementById("type").value ?? '';
+            let guitarBackWood = document.getElementById("back_wood").value ?? '';
+            let guitarTopWood = document.getElementById("top_wood").value ?? '';
+            let searchparameters = `?serialNumber=${guitarSerialNumber}&price=${guitarPrice}&builder=${guitarBuilder}&model=${guitarModel}&type=${guitarType}&backWood=${guitarBackWood}&topWood=${guitarTopWood}`;
+            let response = await fetch(host + "/inventory/search" + searchparameters, request);
+            if (response.status == 200) {
+                guitars = await response.json();
+            }
+            else {
+                console.log(response);
+                alert("Something went wrong trying to search for your desired guitar.")
+            }
+            return guitars;
         }
     </script>
 </body>

@@ -54,7 +54,6 @@
             if (guitars.length == 0) {
                 guitars = await getAllMatchingGuitars();
             }
-            alert(JSON.stringify(guitars));
             let table = document.getElementById("searchResult");
             table.innerHTML = "";
             for (let guitar of guitars) {

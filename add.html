@@ -31,23 +31,38 @@
     <button onclick="addGuitar()">Add the Guitar</button>
     
     <script>
-        function addGuitar() {
-            let serial_number_node = document.getElementById("serial_number");
-            let sn = serial_number_node.value;
-            let price_node = document.getElementById("price");
-            let p = price_node.value;
-            let builder_node = document.getElementById("builder");
-            let b = builder_node.value;
-            let model_node = document.getElementById("model");
-            let m = model_node.value;
-            let type_node = document.getElementById("type");
-            let t = type_node.value;
-            let back_wood_node = document.getElementById("back_wood");
-            let bw = back_wood_node.value;
-            let top_wood_node = document.getElementById("top_wood");
-            let tw = top_wood_node.value;
-            let guitar = {serial_number: sn, price: p, builder: b, model: m, type: t, back_wood: bw, top_wood: tw};
-            alert("\n You entered: " + JSON.stringify(guitar));
+        let host = "https://guitar-inventory-management-latest-5id1.onrender.com";
+
+        async function addGuitar() {
+            let message = "";
+            let sn = document.getElementById("serial_number").value;
+            let p = document.getElementById("price").value;
+            let b = document.getElementById("builder").value;
+            let m = document.getElementById("model").value;
+            let t = document.getElementById("type").value;
+            let bw = document.getElementById("back_wood").value;
+            let tw = document.getElementById("top_wood").value;
+            if (sn === "" || p === "" || b === "" || m === "" || t === "" || bw === "" || tw === "" ) {
+                alert("Please fill in all fields!");
+                return;
+            }
+            let guitar = {serialNumber: sn, price: p, builder: b, model: m, type: t, backWood: bw, topWood: tw};
+            console.log("You entered: " + JSON.stringify(guitar));
+            let request = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(guitar)
+            }
+            let response = await fetch(host + "/inventory", request);
+            if (response.status == 200) {
+                message = "The guitar was added to the system.";
+            } else {
+                message = "Something went wrong. Please try again or contact the customer support team.";
+            }
+            alert(message);
+            return;
         }
     </script>
 

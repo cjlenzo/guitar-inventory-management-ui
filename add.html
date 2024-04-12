@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "navbar.css">
+    <link rel = "stylesheet" href = "add.css">
     <title>Document</title>
 </head>
-<body style = "background-color:tan">
-    <nav>
-        <a href="index.html">Index</a> |
-        <a href="add.html">Add A Guitar</a> |
-        <a href="search.html">Search Guitars</a> |
-        <a href="about.html">About</a>        
-    </nav>
+<body>
+
+    <ul class="topnav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>        
+        <li><a class = "active" href="add.html">Add</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li class="right"><a href="login.html">Login</a></li>
+      </ul>
 
     <label>Serial Number: </label>
     <input id = "serial_number"/>
@@ -36,41 +40,8 @@
     <br/>
     <button onclick="addGuitar()">Add the Guitar</button>
     
-    <script>
-        let host = "https://guitar-inventory-management-latest-5id1.onrender.com";
-
-        async function addGuitar() {
-            let message = "";
-            let sn = document.getElementById("serial_number").value;
-            let p = document.getElementById("price").value;
-            let b = document.getElementById("builder").value;
-            let m = document.getElementById("model").value;
-            let t = document.getElementById("type").value;
-            let bw = document.getElementById("back_wood").value;
-            let tw = document.getElementById("top_wood").value;
-            if (sn === "" || p === "" || b === "" || m === "" || t === "" || bw === "" || tw === "" ) {
-                alert("Please fill in all fields!");
-                return;
-            }
-            let guitar = {serialNumber: sn, price: p, builder: b, model: m, type: t, backWood: bw, topWood: tw};
-            console.log("You entered: " + JSON.stringify(guitar));
-            let request = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(guitar)
-            }
-            let response = await fetch(host + "/inventory", request);
-            if (response.status == 200) {
-                message = "The guitar was added to the system.";
-            } else {
-                message = "Something went wrong. Please try again or contact the customer support team.";
-            }
-            console.log(message);
-            return;
-        }
-    </script>
+    <script src = "configuration.js"></script>
+    <script src = "add.js"> </script>>
 
 </body>
 </html>
